@@ -30,25 +30,27 @@ export default class HomeScreen extends React.Component {
       method: 'POST',
       credentials: 'same-origin',
       mode: 'same-origin',
-      body: JSON.stringify("customers{" + {
-        type: "ALL"
-          + "}"
+      body: JSON.stringify({
+        "customers": {
+          "type": "ALL"
+        }
       }),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'authxtoken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjI0Zjc0NWE5YTFiODkwNTFkOTA4MzRlMzU2NDQwMTNjIiwiaWF0IjoxNTQzMDU0MTAyLCJleHAiOjE1NDMwNjEzMDJ9.aHI_L7EaQgiHVrDFfXlboYeFWhfGs6OzCidgd6f6Hjo',
+        'authxtoken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6Ijg5NTZhZmJiNzUyMzQ3Y2UwMzMzYWRlOWIyMjZlZjI0IiwiaWF0IjoxNTQzMjU4NjQxLCJleHAiOjE1NDMyNjU4NDF9.XEv-PlVov9poWlwIRCFodGaTtbbn0B328GgM_sa96WU',
       }
     }
-    return fetch('http://localhost:3002/mobilecrm/api/getcustomers', data)
-      .then(response => response.json())
+
+    return fetch('https://mobilecrmapi.azurewebsites.net/mobilecrm/api/getcustomers', data)
+      .then((response) => response.json())
       .then((responseJson) => {
 
         this.setState({
           isLoading: false,
           dataSource: responseJson,
         }, function () {
-
+          console.log(responseJson[0].id)
         });
 
       })
@@ -88,7 +90,7 @@ export default class HomeScreen extends React.Component {
           <View style={{ flex: 1, paddingTop: 20 }}>
             <FlatList
               data={this.state.dataSource}
-              renderItem={({ item }) => <Text>{item.title}, {item.releaseYear}</Text>}
+              renderItem={({ item }) => <Text>{item.paymentperiod}, {item.revenue}</Text>}
               keyExtractor={({ id }, index) => id}
             />
           </View>
